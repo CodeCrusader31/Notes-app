@@ -1,7 +1,11 @@
 import { Router } from "express";
 
+import { about } from "../controllers/about.controller.js";
+import { docsIndex, getOpenApiDocument } from "../controllers/docs.controller.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 import { sendSuccess } from "../utils/apiResponse.js";
+import authRoutes from "./auth.routes.js";
+import noteRoutes from "./note.routes.js";
 
 const router = Router();
 
@@ -18,5 +22,10 @@ router.get("/health", (_req, res) => {
   });
 });
 
-export default router;
+router.get("/about", about);
+router.get("/docs", docsIndex);
+router.get("/docs/openapi.json", getOpenApiDocument);
+router.use("/auth", authRoutes);
+router.use("/notes", noteRoutes);
 
+export default router;
